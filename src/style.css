@@ -1,0 +1,10 @@
+/* ボタンをマウスで押した(active)時に、0.96倍に縮小する */
+.v-btn:active {
+  transform: scale(0.96);
+  transition: transform 0.1s; /* スッと動くように */
+}
+
+
+*:not(.v-icon):not(i) {
+  font-family: "Inter", "Noto Sans JP", system-ui, sans-serif !important;
+}

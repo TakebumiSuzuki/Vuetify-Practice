@@ -1,0 +1,35 @@
+{
+  // このファイルは、ルートにある tsconfig.json とは設定の継承関係はありません。
+  // つまり、設定の継承元は tsconfig.json ではなく、node_modules の中にインストールされたVue公式の推奨設定ファイル
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+
+  // 以下は、Vueの推奨設定よりも、以下が優先され、上書き・追加される
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "types": ["vite/client", "node"],
+
+    /* Bundler mode */
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true, //TypeScript はコードの変換（トランスパイル）をしない。型チェックだけを行う」という意味
+    "jsx": "preserve",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+
+    /* 追加 */
+    // "paths": {
+    //   "vuetify": ["./node_modules/vuetify"]
+    // }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
+}

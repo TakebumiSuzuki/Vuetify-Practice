@@ -1,0 +1,9 @@
+{
+  // TypeScriptの仕様では、files や include が何も指定されていない場合、「そのディレクトリ以下の
+  // すべてのファイル（.ts, .tsxなど）」をコンパイル対象として認識します。
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}
