@@ -1,5 +1,5 @@
 import pluginVue from 'eslint-plugin-vue'
-import vueTs from '@vue/eslint-config-typescript'
+import { vueTsConfigs } from '@vue/eslint-config-typescript';
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 
 export default [
@@ -13,8 +13,8 @@ export default [
   ...pluginVue.configs['flat/recommended'],
 
   // 3. TypeScript設定 (@vue/eslint-config-typescript 相当)
-  // 以前の extends: ['@vue/eslint-config-typescript'] は関数呼び出しになりました
-  ...vueTs(),
+  // 以前の extends: ['@vue/eslint-config-typescript'] は Flat Config では vueTsConfigs.recommended を使う
+  vueTsConfigs.recommended,
 
   // 4. Prettierとの競合回避 (@vue/eslint-config-prettier 相当)
   // ESLintでのフォーマットルールを無効化し、Prettierに任せます
@@ -26,4 +26,4 @@ export default [
   //      'vue/multi-word-component-names': 'off',
   //   }
   // }
-]
+];

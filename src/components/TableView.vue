@@ -56,10 +56,9 @@
       :headers="headers"
       :items="props.tasks"
       :items-per-page="10"
-      class="elevation-0"
+      class="elevation-0 compact-table"
       hover
     >
-
       <!-- 行のカスタマイズ -->
       <template #item="{ item, index }">
         <tr
@@ -68,7 +67,6 @@
             opacity: rowVisibility[index] ? 1 : 0,
             transform: rowVisibility[index] ? 'translateY(0)' : 'translateY(20px)',
             transition: `opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.04}s, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.03}s, background-color 0.4s ease`,
-
           }"
         >
           <!-- タイトル -->
@@ -193,4 +191,10 @@
     height: 64px;
     vertical-align: middle;
   } */
+  .compact-table > .v-table__wrapper > table > thead > tr > th,
+  .compact-table > .v-table__wrapper > table > tbody > tr > td {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
 </style>

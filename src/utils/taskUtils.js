@@ -1,6 +1,7 @@
 export const statusOptions = ['未着手', '進行中', '完了'];
 export const priorityOptions = ['高', '中', '低'];
 
+// sortable は true, align は start がデフォルト値。
 export const headers = [
   { title: 'タスク', key: 'title', sortable: true, width: '250px' },
   { title: '説明', key: 'description', sortable: false, width: '300px' },
@@ -11,10 +12,10 @@ export const headers = [
     width: '130px',
   },
   { title: '優先度', key: 'priority', sortable: true, width: '100px' },
-  { title: '進捗', key: 'progress', sortable: true },
+  { title: '進捗', key: 'progress', sortable: true, align: 'center' },
   { title: '担当者名', key: 'assignee', sortable: true, width: '120px' },
-  { title: '期限', key: 'dueDate', sortable: true, width: '120px' },
-  { title: '操作', key: 'actions', sortable: false, align: 'end', width: '120px' },
+  { title: '期限', key: 'dueDate', sortable: true, align: 'center', width: '120px' },
+  { title: '操作', key: 'actions', sortable: false, align: 'center', width: '120px' },
 ];
 
 // ヘルパー関数

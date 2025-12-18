@@ -5,7 +5,6 @@
     tasks: {
       type: Array,
       required: true,
-      default: () => [],
     },
   });
 
@@ -56,7 +55,7 @@
       </div>
 
       <!-- カラムエリア (ここに将来vuedraggableが入ります) -->
-      <div class="kanban-column rounded-xl px-3 py-3 fill-height flex-grow-1">
+      <div class="bg-surfaceVariant rounded-xl px-3 py-3 fill-height flex-grow-1">
         <!-- カードループ -->
         <v-card
           v-for="task in getTasksByStatus(status)"

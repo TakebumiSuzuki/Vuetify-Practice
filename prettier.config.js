@@ -72,5 +72,9 @@ export default {
   // デフォルトは false
   vueIndentScriptAndStyle: true,
 
+  // 1行の文字数に収まる場合でも、元がすでに改行されている場合、属性が複数ある場合は強制的に改行する
+  // 属性が2つ以下でprintWidthに収まる場合は1行になることがあります。
+  singleAttributePerLine: true,
+
   // prettierのプラグインとしては、tailwindcss用や、tomlファイル用のものなどがある。
-}
+};

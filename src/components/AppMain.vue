@@ -47,28 +47,9 @@
 
 <template>
   <v-container fluid class="px-6 pt-4 pb-6">
-    <!-- ヘッダー -->
-    <v-row align="center" class="mb-2">
-      <v-col cols="auto">
-        <h1 class="text-h4 font-weight-bold">タスク管理</h1>
-      </v-col>
-      <v-spacer />
-      <v-col cols="auto">
-        <v-tabs
-          v-model="activeTab"
-          color="primary"
-          class="elevation-1 rounded-lg"
-          bg-color="surface-variant"
-          density="comfortable"
-        >
-          <v-tab value="table" variant="tonal"><v-icon start>mdi-view-list</v-icon></v-tab>
-          <v-tab value="kanban" variant="tonal"><v-icon start>mdi-view-column</v-icon></v-tab>
-        </v-tabs>
-      </v-col>
-    </v-row>
 
     <!-- 検索バー -->
-    <v-toolbar flat class="px-4 bg-surface">
+    <v-toolbar flat class="px-4 bg-transparent rounded-lg">
       <v-text-field
         v-model="searchQuery"
         prepend-inner-icon="mdi-magnify"
@@ -81,6 +62,17 @@
         class="mr-4"
         style="max-width: 400px"
       />
+      <v-spacer></v-spacer>
+        <v-tabs
+          v-model="activeTab"
+          color="primary"
+          class="rounded-lg elevation-2 bg-surface"
+          density="comfortable"
+          height="44"
+        >
+          <v-tab value="table" variant="text"><v-icon start>mdi-view-list</v-icon></v-tab>
+          <v-tab value="kanban"  variant="text"><v-icon start>mdi-view-column</v-icon></v-tab>
+        </v-tabs>
     </v-toolbar>
 
     <!-- メインコンテンツ -->

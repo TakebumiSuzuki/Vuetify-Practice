@@ -1,9 +1,10 @@
 import { createVuetify } from 'vuetify';
 import * as directives from 'vuetify/directives';
-// import { md3 } from 'vuetify/blueprints' // ← ★モダンWeb風にするなら削除推奨
+// 'vuetify/styles' はレイアウトのために必須。vite-plugin-vuetify を使うとバンドルサイズは大幅に削減できる
 import 'vuetify/styles';
-import '@mdi/font/css/materialdesignicons.css';
 
+// import { md3 } from 'vuetify/blueprints' // ← ★モダンWeb風にするなら削除推奨
+// import '@mdi/font/css/materialdesignicons.css';
 
 export default createVuetify({
   directives,
@@ -12,90 +13,115 @@ export default createVuetify({
   theme: {
     defaultTheme: 'dark',
 
-    // themes: {
-    //   light: {
-    //     dark: false,
-    //     colors: {
-    //       primary: '#4F46E5',   // Indigo-600: 信頼感のある鮮やかな青紫
-    //       secondary: '#06B6D4', // Cyan-500
-    //       background: '#F9FAFB', // Gray-50: 完全な白より目に優しい
-    //       surface: '#FFFFFF',
-    //       error: '#EF4444',
-    //     },
-    //   },
-
-    //   dark: {
-    //     dark: true,
-    //     colors: {
-    //       primary: '#818CF8',    // Indigo-400: ダークモード用に少し明るく
-    //       secondary: '#22D3EE',  // Cyan-400
-
-    //       // ★ここが最大の修正ポイント
-    //       // 背景(Slate-900) より カード(Slate-800) を少し明るくして浮き上がらせる
-    //       background: '#0F172A',
-    //       surface: '#1E293B',
-
-    //       error: '#F87171',
-    //     },
-    //   },
-    // },
-
     themes: {
-      // ----------------------------------------------------------------
-      // ライトモード
-      // ----------------------------------------------------------------
       light: {
         dark: false,
         colors: {
-          // ■ メインカラー (濃いインディゴブルー)
-          // Tailwind Indigo-800: 知的で落ち着いた深い青
-          primary: '#564aa8ff',
+          primary: '#4F5B92',
+          surfaceTint: '#4F5B92',
+          onPrimary: '#FFFFFF',
+          primaryContainer: '#DDE1FF',
+          onPrimaryContainer: '#374379',
+          secondary: '#5A5D72',
+          onSecondary: '#FFFFFF',
+          secondaryContainer: '#DEE1F9',
+          onSecondaryContainer: '#424659',
+          tertiary: '#75546E',
+          onTertiary: '#FFFFFF',
+          tertiaryContainer: '#FFD7F4',
+          onTertiaryContainer: '#5C3D56',
+          error: '#BA1A1A',
+          onError: '#FFFFFF',
+          errorContainer: '#FFDAD6',
+          onErrorContainer: '#93000A',
+          background: '#FBF8FF',
 
-          // ■ サブカラー (少し青緑がかった色でアクセント)
-          // Tailwind Teal-600: プライマリーと相性が良く、かつ区別しやすい
-          secondary: '#0D9488',
-
-          // ■ 背景・表面色
-          // Tailwind Zinc-50: 真っ白すぎない、目に優しいごく薄いグレー
-          background: '#FAFAFA',
-          // カードなどは純白で浮き立たせる
-          surface: '#FFFFFF',
-          'surface-variant': '#f4f4f8ff',
-
-          // ■ セマンティックカラー (視認性重視で濃いめ)
-          error: '#DC2626', // Red-600
-          success: '#059669', // Emerald-600
-          warning: '#D97706', // Amber-600
-          info: '#0284C7', // Sky-600
+          onBackground: '#1A1B21',
+          surface: '#FBF8FF',
+          onSurface: '#1A1B21',
+          surfaceVariant: '#E2E1EC',
+          onSurfaceVariant: '#45464F',
+          outline: '#767680',
+          outlineVariant: '#C6C5D0',
+          shadow: '#000000',
+          scrim: '#000000',
+          inverseSurface: '#2F3036',
+          inverseOnSurface: '#F2F0F7',
+          inversePrimary: '#B8C4FF',
+          primaryFixed: '#DDE1FF',
+          onPrimaryFixed: '#06164B',
+          primaryFixedDim: '#B8C4FF',
+          onPrimaryFixedVariant: '#374379',
+          secondaryFixed: '#DEE1F9',
+          onSecondaryFixed: '#171B2C',
+          secondaryFixedDim: '#C2C5DD',
+          onSecondaryFixedVariant: '#424659',
+          tertiaryFixed: '#FFD7F4',
+          onTertiaryFixed: '#2C1229',
+          tertiaryFixedDim: '#E4BAD9',
+          onTertiaryFixedVariant: '#5C3D56',
+          surfaceDim: '#DBD9E0',
+          surfaceBright: '#FBF8FF',
+          surfaceContainerLowest: '#FFFFFF',
+          surfaceContainerLow: '#F4F2FA',
+          surfaceContainer: '#EFEDF4',
+          surfaceContainerHigh: '#E9E7EF',
+          surfaceContainerHighest: '#E3E1E9',
         },
       },
-
-      // ----------------------------------------------------------------
-      // ダークモード
-      // ----------------------------------------------------------------
       dark: {
         dark: true,
         colors: {
-          // ■ メインカラー (ライトより明るくして視認性を確保)
-          // Tailwind Indigo-400: 暗い背景でも発光して見える明るめのインディゴ
-          primary: '#818CF8',
-
-          // ■ サブカラー
-          // Tailwind Teal-400
-          secondary: '#2DD4BF',
-
-          // ■ 背景・表面色 (Zinc系: 青みがかったダークグレー)
-          // Tailwind Zinc-950: ほぼ黒に近いが、温かみより冷たさのあるダークグレー
-          background: '#09090B',
-          // Tailwind Zinc-900: 背景より一段階明るくしてカードの境界を作る
-          surface: '#18181B',
-          'surface-variant': '#27272A',
-
-          // ■ セマンティックカラー (パステル寄りで明るく調整)
-          error: '#F87171', // Red-400
-          success: '#34D399', // Emerald-400
-          warning: '#FBBF24', // Amber-400
-          info: '#38BDF8', // Sky-400
+          primary: '#B8C4FF',
+          surfaceTint: '#B8C4FF',
+          onPrimary: '#1F2D61',
+          primaryContainer: '#374379',
+          onPrimaryContainer: '#DDE1FF',
+          secondary: '#C2C5DD',
+          onSecondary: '#2C2F42',
+          secondaryContainer: '#424659',
+          onSecondaryContainer: '#DEE1F9',
+          tertiary: '#E4BAD9',
+          onTertiary: '#43273F',
+          tertiaryContainer: '#5C3D56',
+          onTertiaryContainer: '#FFD7F4',
+          error: '#FFB4AB',
+          onError: '#690005',
+          errorContainer: '#93000A',
+          onErrorContainer: '#FFDAD6',
+          background: '#121318',
+          onBackground: '#E3E1E9',
+          // surface: '#121318',
+          surface: '#1d1e25ff',
+          onSurface: '#E3E1E9',
+          surfaceVariant: '#45464F',
+          onSurfaceVariant: '#C6C5D0',
+          outline: '#90909A',
+          outlineVariant: '#45464F',
+          shadow: '#000000',
+          scrim: '#000000',
+          inverseSurface: '#E3E1E9',
+          inverseOnSurface: '#2F3036',
+          inversePrimary: '#4F5B92',
+          primaryFixed: '#DDE1FF',
+          onPrimaryFixed: '#06164B',
+          primaryFixedDim: '#B8C4FF',
+          onPrimaryFixedVariant: '#374379',
+          secondaryFixed: '#DEE1F9',
+          onSecondaryFixed: '#171B2C',
+          secondaryFixedDim: '#C2C5DD',
+          onSecondaryFixedVariant: '#424659',
+          tertiaryFixed: '#FFD7F4',
+          onTertiaryFixed: '#2C1229',
+          tertiaryFixedDim: '#E4BAD9',
+          onTertiaryFixedVariant: '#5C3D56',
+          surfaceDim: '#121318',
+          surfaceBright: '#38393F',
+          surfaceContainerLowest: '#0D0E13',
+          surfaceContainerLow: '#1A1B21',
+          surfaceContainer: '#1F1F25',
+          surfaceContainerHigh: '#292A2F',
+          surfaceContainerHighest: '#34343A',
         },
       },
     },
@@ -106,14 +132,10 @@ export default createVuetify({
     global: {
       ripple: false,
     },
-
     VBtn: {
       variant: 'flat',
-      // color: 'primary', // デフォルトをプライマリにしたい場合
-      height: 44, // 少し高さを出して押しやすく（スマホ対応）
       rounded: 'lg', // MD3のカプセル型ではなく、美しい角丸（8-12px程度）
       elevation: 0,
-      ripple: false,
     },
     VCard: {
       elevation: 0,
@@ -134,8 +156,18 @@ export default createVuetify({
       rounded: 'lg',
     },
     // その他の入力系も統一
-    VTextarea: { variant: 'outlined', density: 'comfortable', rounded: 'lg', color: 'primary' },
-    VAutocomplete: { variant: 'outlined', density: 'comfortable', rounded: 'lg', color: 'primary' },
+    VTextarea: {
+      variant: 'outlined',
+      density: 'comfortable',
+      rounded: 'lg',
+      color: 'primary',
+    },
+    VAutocomplete: {
+      variant: 'outlined',
+      density: 'comfortable',
+      rounded: 'lg',
+      color: 'primary',
+    },
   },
 
   display: {
