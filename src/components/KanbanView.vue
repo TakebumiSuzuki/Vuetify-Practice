@@ -1,5 +1,9 @@
 <script setup>
-  import { statusOptions, getStatusColor, getPriorityColor } from '../utils/taskUtils';
+  import {
+    statusOptions,
+    getStatusColor,
+    getPriorityColor,
+  } from '../utils/taskUtils';
 
   const props = defineProps({
     tasks: {
@@ -18,7 +22,7 @@
   };
 
   // --- アクション (親にemitする) ---
-  const onOpenDialog = (task) => {
+  const openDialog = (task) => {
     emit('open-dialog', task);
   };
 
@@ -28,14 +32,35 @@
 </script>
 
 <template>
-  <v-row class="fill-height" style="min-height: 70vh">
+  <v-container>
+    <h3>2. Inset（トグルスタイル）</h3>
+    <!-- insetを付けるとカプセル型のようなデザインになります -->
+    <v-switch
+      disabled
+      inset
+      color="primary"
+      loading="primary"
+      class="static-switch"
+    ></v-switch>
+
+    <h3>3. ローディング状態</h3>
+    <!-- 非同期処理中などに便利です -->
+    <v-switch
+      loading="warning"
+      inset
+    ></v-switch>
+  </v-container>
+
+  <v-row
+    class="h-100 flex-nowrap justify-center overflow-x-auto"
+    style="min-height: 70vh"
+  >
     <!-- ステータスカラムループ -->
     <v-col
       v-for="status in statusOptions"
       :key="status"
-      cols="12"
-      md="4"
       class="d-flex flex-column"
+      style="min-width: 320px; max-width: 450px"
     >
       <!-- カラムヘッダー -->
       <div class="d-flex align-center mb-3 px-1">
@@ -47,15 +72,25 @@
           offset-y="3"
           class="mr-3"
         >
-          <v-avatar size="32" color="surface-variant" variant="flat">
-            <span class="text-caption font-weight-bold">{{ getTasksByStatus(status).length }}</span>
+          <v-avatar
+            size="32"
+            color="surface-variant"
+            variant="flat"
+          >
+            <span class="text-caption font-weight-bold">{{
+              getTasksByStatus(status).length
+            }}</span>
           </v-avatar>
         </v-badge>
-        <h3 class="text-h6 font-weight-bold text-medium-emphasis">{{ status }}</h3>
+        <h3 class="text-h6 font-weight-bold text-medium-emphasis">
+          {{ status }}
+        </h3>
       </div>
 
       <!-- カラムエリア (ここに将来vuedraggableが入ります) -->
-      <div class="bg-surfaceVariant rounded-xl px-3 py-3 fill-height flex-grow-1">
+      <div
+        class="bg-surfaceVariant rounded-xl px-3 py-3 fill-height flex-grow-1"
+      >
         <!-- カードループ -->
         <v-card
           v-for="task in getTasksByStatus(status)"
@@ -75,7 +110,10 @@
               </div>
 
               <!-- 右上ボタン (@click.stop でカードクリックを防止) -->
-              <div class="d-flex align-start" style="margin-top: -4px; margin-right: -8px">
+              <div
+                class="d-flex align-start"
+                style="margin-top: -4px; margin-right: -8px"
+              >
                 <v-btn
                   icon="mdi-eye"
                   variant="text"
@@ -113,12 +151,22 @@
                 >
                   {{ task.priority }}
                 </v-chip>
-                <span class="text-caption text-medium-emphasis d-flex align-center">
-                  <v-icon size="x-small" start class="mr-1">mdi-calendar</v-icon>
+                <span
+                  class="text-caption text-medium-emphasis d-flex align-center"
+                >
+                  <v-icon
+                    size="x-small"
+                    start
+                    class="mr-1"
+                    >mdi-calendar</v-icon
+                  >
                   {{ task.dueDate.slice(5) }}
                 </span>
               </div>
-              <v-tooltip :text="task.assignee" location="top">
+              <v-tooltip
+                :text="task.assignee"
+                location="top"
+              >
                 <template v-slot:activator="{ props }">
                   <v-avatar
                     v-bind="props"
@@ -139,6 +187,10 @@
 </template>
 
 <style scoped>
+
+  .static-switch :deep(.v-switch__thumb) {
+  transform: scale(1) !important;
+}
   /* Kanban専用スタイルだけ持ってくる */
   .kanban-column {
     background-color: rgba(var(--v-theme-on-surface), 0.04);
