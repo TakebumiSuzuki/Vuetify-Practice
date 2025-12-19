@@ -40,7 +40,7 @@
     transition="scroll-y-reverse-transition"
   >
     <v-card v-if="task" class="rounded-xl" >
-      <v-card-title class="d-flex align-center py-4 bg-surfaceVariant">
+      <v-card-title class="d-flex align-center py-4 bg-surfaceBright" >
         <span class="text-h6 font-weight-bold">{{ task.title }} の詳細</span>
         <v-spacer />
         <v-btn
@@ -57,9 +57,9 @@
         ></v-btn>
       </v-card-title>
 
-      <v-divider />
+      <v-divider color="on-surface-bright" opacity="0.25"></v-divider>
 
-      <v-card-text style="max-height: 70vh">
+      <v-card-text style="max-height: 70vh" class="bg-surfaceBright">
         <v-container>
           <v-row>
             <v-col cols="12" md="8">
@@ -71,7 +71,7 @@
               </p>
             </v-col>
 
-            <v-col cols="12" md="4" class="bg-surfaceVariant rounded-lg pa-4">
+            <v-col cols="12" md="4" class="bg-surfaceContainerHigh rounded-lg pa-4">
               <div class="text-overline mb-2">編集・プロパティ</div>
 
               <div class="mb-4">
@@ -83,7 +83,6 @@
                   variant="outlined"
                   density="compact"
                   hide-details
-                  bg-color="bg-surfaceVariant"
                   :color="getStatusColor(task.status)"
                 >
                   <template v-slot:selection="{ item }">
