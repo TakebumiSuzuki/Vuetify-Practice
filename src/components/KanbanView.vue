@@ -15,74 +15,84 @@
   });
 
   // 親にイベントを通知する定義
-  const emit = defineEmits(['open-dialog', 'open-new-tab']);
-
-  // --- Kanban用フィルタリング ---
-  // props.tasks を使ってフィルタリングします
-  // const getTasksByStatus = (status) => {
-  //   return props.tasks.filter((task) => task.status === status);
-  // };
+  const emit = defineEmits(['open-dialog', 'open-new-tab', 'update-task']);
 
   // --- アクション (親にemitする) ---
   const openDialog = (task) => {
     emit('open-dialog', task);
   };
 
-  const onOpenInNewTab = (task) => {
+  const openInNewTab = (task) => {
     emit('open-new-tab', task);
   };
 
   // 1. カラムごとのリストを管理する変数を作る
-  const columns = ref({});
+  const groupedTasks = ref({});
 
   // 2. props.tasks が来たら、カラムごとに振り分ける関数
-  const distributeTasks = () => {
+  const groupTasksByStatus = () => {
     // 初期化
     statusOptions.forEach((status) => {
-      columns.value[status] = [];
+      groupedTasks.value[status] = [];
     });
 
     // 振り分け
     props.tasks.forEach((task) => {
-      if (columns.value[task.status]) {
-        columns.value[task.status].push(task);
+      if (groupedTasks.value[task.status]) {
+        groupedTasks.value[task.status].push(task);
       }
     });
   };
 
   // 初期化とprops変更の監視
-  watch(() => props.tasks, distributeTasks, { immediate: true });
+  watch(() => props.tasks, groupTasksByStatus, { immediate: true, deep: true  });
 
   // 3. ドロップが終わった時に呼ばれるイベント（ステータス更新用）
   const onDrop = (event, newStatus) => {
     // ここで、移動したタスクのステータスを書き換えて親に通知する処理が必要になります
     // カンバンの実装で一番難しい部分です
-    // 簡易的には、columnsの中身をすべて結合して親に返すなどします
+    // 簡易的には、groupedTasksの中身をすべて結合して親に返すなどします
+  };
+
+  const onDragChange = (event, newStatus) => {
+    // event.added は、他のカラムからこのカラムにアイテムが移動してきた時に存在します
+    // added は、vue-draggable-plus が、@change イベント発火時に渡してくるオブジェクトのプロパティ
+    if (event.added) {
+      const movedTask = event.added.element;
+
+      // 1. タスクのステータス情報を更新
+      movedTask.status = newStatus;
+
+      emit('update-task-status', {
+        taskId: event.added.element.id,
+        newStatus: newStatus,
+      });
+
+      /*
+      親側
+      const updateTaskStatus = async ({ taskId, newStatus }) => {
+        // 1. フロントエンドのデータを即時更新（UIのチラツキ防止）
+        const task = tasks.value.find(t => t.id === taskId);
+        if (task) {
+          task.status = newStatus;
+        }
+
+        // 2. バックエンドへ送信
+        try {
+          await api.patch(`/tasks/${taskId}`, { status: newStatus });
+        } catch (e) {
+          // エラーなら元に戻すなどの処理
+          console.error('保存失敗');
+        }
+      };
+      */
+    }
   };
 </script>
 
 <template>
-  <v-container>
-    <h3>2. Inset（トグルスタイル）</h3>
-    <!-- insetを付けるとカプセル型のようなデザインになります -->
-    <v-switch
-      disabled
-      inset
-      color="primary"
-      loading="primary"
-      class="static-switch"
-    ></v-switch>
-
-    <h3>3. ローディング状態</h3>
-    <!-- 非同期処理中などに便利です -->
-    <v-switch
-      loading="warning"
-      inset
-    ></v-switch>
-  </v-container>
-
   <v-row
-    class="h-100 flex-nowrap justify-center overflow-x-auto"
+    class="flex-nowrap justify-center overflow-x-auto"
     style="min-height: 70vh"
   >
     <!-- ステータスカラムループ -->
@@ -108,7 +118,7 @@
             variant="flat"
           >
             <span class="text-caption font-weight-bold">{{
-              columns[status]?.length || 0
+              groupedTasks[status]?.length || 0
             }}</span>
           </v-avatar>
         </v-badge>
@@ -122,18 +132,18 @@
         class="bg-surfaceVariant rounded-xl px-3 py-3 fill-height flex-grow-1"
       >
         <VueDraggable
-          v-model="columns[status]"
+          v-model="groupedTasks[status]"
           group="tasks"
           :animation="500"
           class="d-flex flex-column ga-3 drag-container"
           ghost-class="ghost"
-          @end="(e) => onDrop(e, status)"
+          @change="(event) => onDragChange(event, status)"
         >
           <!-- カードループ -->
           <v-card
-            v-for="task in columns[status]"
+            v-for="task in groupedTasks[status]"
             :key="task.id"
-            class="mb-3 rounded-lg hover-card border-none"
+            class="rounded-lg hover-card border-none"
             elevation="1"
             @click="openDialog(task)"
           >
@@ -226,45 +236,39 @@
 </template>
 
 <style scoped>
-  .static-switch :deep(.v-switch__thumb) {
-    transform: scale(1) !important;
-  }
-  /* Kanban専用スタイルだけ持ってくる */
-  .kanban-column {
-    background-color: rgba(var(--v-theme-on-surface), 0.04);
-    border: 1px dashed rgba(var(--v-theme-on-surface), 0.1);
-  }
-
   .hover-card {
     /* transition:
       transform 0.2s ease,
       box-shadow 0.2s ease; */
     cursor: pointer;
+
   }
   .hover-card:hover {
     /* transform: translateY(-4px); */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
   }
+
 
   .cursor-pointer {
     cursor: pointer !important;
-  }
-  /*重要：リストが空になった時でもドロップできるように、
-    ドラッグエリアには必ず「最小の高さ(min-height)」を持たせます。
-  */
-  .drag-container {
-    min-height: 100px;
-  }
-
-  .ghost {
-    opacity: 0.4;
-    background: #c8ebfb; /* ドロップ先のガイド色 */
-    border: 2px dashed #1976d2;
   }
 
   .cursor-move {
     cursor: grab;
   }
+
+  /*重要：リストが空になった時でもドロップできるように、
+    ドラッグエリアには必ず「最小の高さ(min-height)」を持たせます。
+  */
+  .drag-container {
+    min-height: 500px;
+  }
+
+  .ghost {
+    background: rgba(var(--v-theme-primary), 0.4);
+  }
+
+
   /* 追加: ドラッグ中やアニメーション中は transition を無効にする */
   /* VueDraggable (Sortable.js) が付与するクラスを利用 */
   .sortable-ghost,
