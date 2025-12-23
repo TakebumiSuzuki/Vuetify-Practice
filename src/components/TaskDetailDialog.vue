@@ -71,7 +71,7 @@
               </p>
             </v-col>
 
-            <v-col cols="12" md="4" class="bg-surfaceContainerHigh rounded-lg pa-4">
+            <v-col cols="12" md="4" class="rounded-lg pa-4" style="background-color: rgba(var(--v-theme-surface-variant), 0.07);">
               <div class="text-overline mb-2">編集・プロパティ</div>
 
               <div class="mb-4">
