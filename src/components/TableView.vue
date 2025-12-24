@@ -37,9 +37,7 @@
   // とだけ書くと、フィルターをした後、追跡が途絶える。
   watch(
     () => props.tasks,
-    () => {
-      playAnimation();
-    },
+    () => { playAnimation() },
   );
 
   // --- アクション用ラッパー ---
@@ -117,7 +115,8 @@
                   class="cursor-pointer"
                   link
                 >
-                  {{ item.priority }}<v-icon end size="small">mdi-chevron-down</v-icon>
+                  {{ item.priority }}
+                  <v-icon end size="small">mdi-chevron-down</v-icon>
                 </v-chip>
               </template>
               <v-list density="compact">
@@ -136,13 +135,13 @@
           <td>
             <div class="d-flex align-center">
               <v-progress-linear
-                :model-value="item.progress"
+                v-model="item.progress"
                 :color="getProgressColor(item.progress)"
                 height="8"
                 rounded
                 class="mr-2"
                 style="min-width: 80px"
-              ></v-progress-linear>
+              />
               <span class="text-caption">{{ item.progress }}%</span>
             </div>
           </td>
@@ -182,15 +181,6 @@
   .cursor-pointer {
     cursor: pointer !important;
   }
-  /* :deep(.v-data-table__th) {
-    font-weight: 600 !important;
-    background-color: rgb(var(--v-theme-surface)) !important;
-  }
-  :deep(.v-data-table__td) {
-    padding: 12px 16px !important;
-    height: 64px;
-    vertical-align: middle;
-  } */
   .compact-table > .v-table__wrapper > table > thead > tr > th,
   .compact-table > .v-table__wrapper > table > tbody > tr > td {
     padding-left: 10px;

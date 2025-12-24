@@ -5,7 +5,7 @@
     priorityOptions,
     getStatusColor,
     getPriorityColor,
-  } from '../utils/taskUtils';
+  } from '@/utils/taskUtils';
 
   const props = defineProps({
     modelValue: {
@@ -27,7 +27,7 @@
     set: (value) => emit('update:modelValue', value),
   });
 
-  const onOpenNewTab = () => {
+  const openNewTab = () => {
     emit('open-new-tab', props.task);
   };
 </script>
@@ -46,18 +46,18 @@
         <v-btn
           icon="mdi-open-in-new"
           variant="text"
-          class="mr-2 cursor-pointer"
-          @click="onOpenNewTab"
+          class="mr-2"
+          @click="openNewTab"
         ></v-btn>
         <v-btn
           icon="mdi-close"
           variant="text"
-          class="cursor-pointer"
+          class=""
           @click="isVisible = false"
         ></v-btn>
       </v-card-title>
 
-      <v-divider color="on-surface-bright" opacity="0.25"></v-divider>
+      <v-divider color="on-surfaceBright" opacity="0.25" />
 
       <v-card-text style="max-height: 70vh" class="bg-surfaceBright">
         <v-container>
@@ -71,7 +71,7 @@
               </p>
             </v-col>
 
-            <v-col cols="12" md="4" class="rounded-lg pa-4" style="background-color: rgba(var(--v-theme-surface-variant), 0.07);">
+            <v-col cols="12" md="4" class="rounded-lg pa-4 bg-surfaceContainerHigh">
               <div class="text-overline mb-2">編集・プロパティ</div>
 
               <div class="mb-4">
@@ -142,17 +142,17 @@
         </v-container>
       </v-card-text>
 
-      <v-divider />
+      <!-- <v-divider />
 
       <v-card-actions class="pa-4">
         <v-spacer />
-        <v-btn color="grey" variant="text" class="cursor-pointer" @click="isVisible = false"
+        <v-btn color="grey" variant="text"  @click="isVisible = false"
           >閉じる</v-btn
         >
-        <v-btn color="primary" variant="flat" class="cursor-pointer" @click="isVisible = false"
+        <v-btn color="primary" variant="flat" @click="isVisible = false"
           >保存する</v-btn
         >
-      </v-card-actions>
+      </v-card-actions> -->
     </v-card>
   </v-dialog>
 </template>

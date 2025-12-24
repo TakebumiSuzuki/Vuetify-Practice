@@ -46,10 +46,15 @@
 </script>
 
 <template>
-  <v-container fluid class="px-6 pt-4 pb-6">
-
+  <v-container
+    fluid
+    class="px-6 pt-4 pb-6"
+  >
     <!-- 検索バー -->
-    <v-toolbar flat class="px-4 bg-transparent rounded-lg">
+    <v-toolbar
+      flat
+      class="px-4 bg-transparent rounded-lg"
+    >
       <v-text-field
         v-model="searchQuery"
         prepend-inner-icon="mdi-magnify"
@@ -63,20 +68,31 @@
         style="max-width: 400px"
       />
       <v-spacer></v-spacer>
-        <v-tabs
-          v-model="activeTab"
-          color="primary"
-          class="rounded-lg elevation-2 bg-surface"
-          density="comfortable"
-          height="44"
+      <v-tabs
+        v-model="activeTab"
+        color="primary"
+        class="rounded-lg elevation-2 bg-surface"
+        density="comfortable"
+        height="44"
+      >
+        <v-tab
+          value="table"
+          variant="text"
+          ><v-icon start>mdi-view-list</v-icon></v-tab
         >
-          <v-tab value="table" variant="text"><v-icon start>mdi-view-list</v-icon></v-tab>
-          <v-tab value="kanban"  variant="text"><v-icon start>mdi-view-column</v-icon></v-tab>
-        </v-tabs>
+        <v-tab
+          value="kanban"
+          variant="text"
+          ><v-icon start>mdi-view-column</v-icon></v-tab
+        >
+      </v-tabs>
     </v-toolbar>
 
     <!-- メインコンテンツ -->
-    <v-window v-model="activeTab" class="mt-4">
+    <v-window
+      v-model="activeTab"
+      class="mt-4"
+    >
       <v-window-item value="table">
         <TableView
           :tasks="filteredTasks"
@@ -87,16 +103,26 @@
         />
       </v-window-item>
 
-      <v-window-item value="kanban" class="fill-height">
+      <v-window-item
+        value="kanban"
+        class="fill-height"
+      >
         <KanbanView
           :tasks="filteredTasks"
           @open-dialog="openDialog"
           @open-new-tab="openInNewTab"
+          @update-status="updateStatus"
+          @update-priority="updatePriority"
         />
       </v-window-item>
     </v-window>
 
     <!-- 詳細ダイアログ (コンポーネント化) -->
-    <TaskDetailDialog v-model="showDialog" :task="selectedTask" @open-new-tab="openInNewTab" />
+    <TaskDetailDialog
+      v-model="showDialog"
+      :task="selectedTask"
+      @open-new-tab="openInNewTab"
+    />
+
   </v-container>
 </template>
