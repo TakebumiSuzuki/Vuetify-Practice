@@ -25,21 +25,21 @@
         <v-spacer />
         <v-btn
           variant="tonal"
-          color="secondary"
+          :color="dialogStore.cancelColor"
           class="mr-2 px-4  font-weight-bold"
           @click="dialogStore.handleCancel()"
         >
-          {{ dialogStore.cancelText }}
+          {{ dialogStore.cancelLabel }}
         </v-btn>
 
         <!-- 薄い赤背景 + 濃い赤文字 -->
         <v-btn
-          color="error"
+          :color="dialogStore.confirmColor"
           variant="tonal"
           class="px-6 font-weight-bold"
-          @click="dialogStore.handleAgree()"
+          @click="dialogStore.handleConfirm()"
         >
-          {{ dialogStore.confirmText }}
+          {{ dialogStore.confirmLabel }}
         </v-btn>
       </v-card-actions>
     </v-card>

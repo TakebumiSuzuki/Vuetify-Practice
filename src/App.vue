@@ -19,7 +19,7 @@
     <AppHeader />
 
     <v-main>
-      <AppMain />
+      <RouterView/>
     </v-main>
 
     <Dialog />

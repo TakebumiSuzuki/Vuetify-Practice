@@ -58,24 +58,21 @@
   const updatePriority = (item, newPriority) =>
     emit('update-priority', item, newPriority);
 
-
-
-  import { useSnackbarStore } from '@/stores/snackbar'
-  const snackbarStore = useSnackbarStore()
+  import { useSnackbarStore } from '@/stores/snackbar';
+  const snackbarStore = useSnackbarStore();
 
   const handleDialog = async (item) => {
-    const isAgreed = await dialogStore.showDialog(
-      'Delete item?', // タイトル
-      'You are about to delete "Project A". Are you sure?', // 本文
-      'Delete', // 同意ボタン
-      'Cancel', // キャンセルボタン
-    );
+    const isAgreed = await dialogStore.showDialog({
+      titleText: 'Delete Item?',
+      messageText: 'You are about to delete "Project A". Are you sure?',
+      confirm: { label: 'Delete', color: 'error' },
+      cancel: { label: 'Cancel', color: 'secondary' },
+    });
 
     if (isAgreed) {
-      snackbarStore.show('保存しました', 'primary')
+      snackbarStore.show('保存しました', 'primary');
     } else {
-      snackbarStore.show('エラーが発生しました', 'error')
-
+      snackbarStore.show('エラーが発生しました', 'error');
     }
   };
 </script>
@@ -104,7 +101,7 @@
         >
           <!-- タイトル -->
           <td>
-            <span class="font-weight-bold text-body-1">{{ item.title }}</span>
+            <span class="font-weight-bold text-body-1  text-truncate">{{ item.title }}</span>
           </td>
 
           <!-- 説明 -->
@@ -116,7 +113,7 @@
           </td>
 
           <!-- ステータス (Dropdown) -->
-          <td>
+          <td >
             <v-menu location="bottom start">
               <template #activator="{ props }">
                 <v-chip
@@ -194,10 +191,10 @@
           </td>
 
           <!-- 担当者 -->
-          <td>{{ item.assignee }}</td>
+          <td class="text-truncate">{{ item.assignee }}</td>
 
           <!-- 期限 -->
-          <td>{{ item.dueDate }}</td>
+          <td class="text-truncate">{{ item.dueDate }}</td>
 
           <!-- アクションボタン -->
           <td class="text-center text-no-wrap">

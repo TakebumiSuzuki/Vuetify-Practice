@@ -6,23 +6,30 @@ export const useConfirmStore = defineStore('dialog', () => {
 
   const title = ref('');
   const message = ref('');
-  const confirmText = ref('Agree');
-  const cancelText = ref('Cancel');
+  const confirmLabel = ref('');
+  const confirmColor = ref('');
+  const cancelLabel = ref('');
+  const cancelColor = ref('')
   let resolver = null;
 
   const resetVars = () => {
     title.value = '';
     message.value = '';
-    confirmText.value = 'Agree';
-    cancelText.value = 'Cancel';
+    confirmLabel.value = '';
+    confirmColor.value = '';
+    cancelLabel.value = '';
+    cancelColor.value = '';
     resolver = null;
   };
 
-  const showDialog = (titleWord, messageWord, agreeWord, cancelWord) => {
-    title.value = titleWord;
-    message.value = messageWord;
-    confirmText.value = agreeWord;
-    cancelText.value = cancelWord;
+  const showDialog = ({titleText, messageText, confirm, cancel}) => {
+    resetVars();
+    title.value = titleText;
+    message.value = messageText;
+    confirmLabel.value = confirm.label;
+    confirmColor.value = confirm.color;
+    cancelLabel.value = cancel.label;
+    cancelColor.value = cancel.color
     isOpen.value = true;
 
     return new Promise((resolve) => {
@@ -30,12 +37,12 @@ export const useConfirmStore = defineStore('dialog', () => {
     });
   };
 
-  const handleAgree = () => {
+  const handleConfirm = () => {
     if (resolver){
       resolver(true);
     }
     isOpen.value = false;
-    resetVars();
+
   };
 
   const handleCancel = () => {
@@ -48,10 +55,13 @@ export const useConfirmStore = defineStore('dialog', () => {
     isOpen,
     title,
     message,
-    confirmText,
-    cancelText,
+    confirmLabel,
+    confirmColor,
+    cancelLabel,
+    cancelColor,
+
     showDialog,
-    handleAgree,
+    handleConfirm,
     handleCancel,
   };
 });
