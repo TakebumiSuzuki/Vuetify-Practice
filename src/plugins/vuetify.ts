@@ -136,6 +136,7 @@ export default createVuetify({
       variant: 'flat',
       rounded: 'lg', // MD3のカプセル型ではなく、美しい角丸（8-12px程度）
       elevation: 0,
+      // style: 'text-transform: none;',
     },
     VCard: {
       elevation: 0,

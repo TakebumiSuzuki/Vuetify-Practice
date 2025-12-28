@@ -8,6 +8,9 @@
     getPriorityColor,
     getProgressColor,
   } from '../utils/taskUtils';
+  import { useConfirmStore } from '../stores/confirm';
+
+  const dialogStore = useConfirmStore();
 
   const props = defineProps({
     tasks: {
@@ -16,7 +19,12 @@
     },
   });
 
-  const emit = defineEmits(['open-dialog', 'open-new-tab', 'update-status', 'update-priority']);
+  const emit = defineEmits([
+    'open-dialog',
+    'open-new-tab',
+    'update-status',
+    'update-priority',
+  ]);
 
   // --- アニメーション制御 ---
   const rowVisibility = ref([]);
@@ -37,14 +45,39 @@
   // とだけ書くと、フィルターをした後、追跡が途絶える。
   watch(
     () => props.tasks,
-    () => { playAnimation() },
+    () => {
+      playAnimation();
+    },
   );
 
   // --- アクション用ラッパー ---
   const openDialog = (item) => emit('open-dialog', item);
   const openInNewTab = (item) => emit('open-new-tab', item);
-  const updateStatus = (item, newStatus) => emit('update-status', item, newStatus);
-  const updatePriority = (item, newPriority) => emit('update-priority', item, newPriority);
+  const updateStatus = (item, newStatus) =>
+    emit('update-status', item, newStatus);
+  const updatePriority = (item, newPriority) =>
+    emit('update-priority', item, newPriority);
+
+
+
+  import { useSnackbarStore } from '@/stores/snackbar'
+  const snackbarStore = useSnackbarStore()
+
+  const handleDialog = async (item) => {
+    const isAgreed = await dialogStore.showDialog(
+      'Delete item?', // タイトル
+      'You are about to delete "Project A". Are you sure?', // 本文
+      'Delete', // 同意ボタン
+      'Cancel', // キャンセルボタン
+    );
+
+    if (isAgreed) {
+      snackbarStore.show('保存しました', 'primary')
+    } else {
+      snackbarStore.show('エラーが発生しました', 'error')
+
+    }
+  };
 </script>
 
 <template>
@@ -63,7 +96,9 @@
           class="table-row"
           :style="{
             opacity: rowVisibility[index] ? 1 : 0,
-            transform: rowVisibility[index] ? 'translateY(0)' : 'translateY(20px)',
+            transform: rowVisibility[index]
+              ? 'translateY(0)'
+              : 'translateY(20px)',
             transition: `opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.04}s, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.03}s, background-color 0.4s ease`,
           }"
         >
@@ -73,7 +108,10 @@
           </td>
 
           <!-- 説明 -->
-          <td class="text-medium-emphasis text-truncate" style="max-width: 200px">
+          <td
+            class="text-medium-emphasis text-truncate"
+            style="max-width: 200px"
+          >
             {{ item.description }}
           </td>
 
@@ -88,7 +126,12 @@
                   class="font-weight-medium cursor-pointer"
                   link
                 >
-                  {{ item.status }}<v-icon end size="small">mdi-chevron-down</v-icon>
+                  {{ item.status
+                  }}<v-icon
+                    end
+                    size="small"
+                    >mdi-chevron-down</v-icon
+                  >
                 </v-chip>
               </template>
               <v-list density="compact">
@@ -116,7 +159,11 @@
                   link
                 >
                   {{ item.priority }}
-                  <v-icon end size="small">mdi-chevron-down</v-icon>
+                  <v-icon
+                    end
+                    size="small"
+                    >mdi-chevron-down</v-icon
+                  >
                 </v-chip>
               </template>
               <v-list density="compact">
@@ -159,7 +206,7 @@
               variant="text"
               density="compact"
               color="medium-emphasis"
-              class="mr-4 cursor-pointer"
+              class="mr-3 cursor-pointer"
               @click="openDialog(item)"
             ></v-btn>
             <v-btn
@@ -167,8 +214,16 @@
               variant="text"
               density="compact"
               color="medium-emphasis"
-              class="cursor-pointer"
+              class="mr-3 cursor-pointer"
               @click="openInNewTab(item)"
+            ></v-btn>
+            <v-btn
+              icon="mdi-trash-can-outline"
+              variant="text"
+              density="compact"
+              color="medium-emphasis"
+              class="cursor-pointer"
+              @click="handleDialog"
             ></v-btn>
           </td>
         </tr>
@@ -186,5 +241,4 @@
     padding-left: 10px;
     padding-right: 10px;
   }
-
 </style>

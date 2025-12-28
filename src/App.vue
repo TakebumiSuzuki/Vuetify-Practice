@@ -1,13 +1,14 @@
-<!-- App.vue -->
 <script setup lang="ts">
   import { onMounted } from 'vue';
   import { useTheme } from 'vuetify';
+
+  import Dialog from './components/ConfirmDialog.vue';
   import AppHeader from './components/AppHeader.vue';
-  import AppMain from './components/AppMain.vue'; // ★作成したMainコンポーネントをインポート
+  import AppMain from './components/AppMain.vue';
+  import Snackbar from './components/Snackbar.vue'
 
   const theme = useTheme();
 
-  // アプリ全体の初期設定
   onMounted(() => {
     theme.global.name.value = 'light';
   });
@@ -20,6 +21,11 @@
     <v-main>
       <AppMain />
     </v-main>
+
+    <Dialog />
+
+    <Snackbar/>
+
+
   </v-app>
 </template>
-
